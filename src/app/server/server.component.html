@@ -1,0 +1,16 @@
+<div class="card border border-success">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <h3>Name: {{ server.name }}</h3>
+        <p>Status: 
+        <span class="font-weight-bold" [ngClass]="server.status === false 
+        ? 'text-danger'
+        : 'text-success'"> 
+          <strong>{{ server.status }}</strong>
+        </span></p>
+
+        <button class="btn btn-primary">Change to Online</button>
+        <button class="btn btn-danger">Change to Offline</button>
+      </li>
+    </ul>
+</div>

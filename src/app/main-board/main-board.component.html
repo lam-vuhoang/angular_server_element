@@ -1,0 +1,39 @@
+<div class="container text-center">
+    <div class="row">
+        <div class="col-xs-6">
+            <label>Name</label>
+            <input type="text" [(ngModel)]="serverName">
+        </div>
+        <div class="col-xs-6">
+            <label for="">Status</label>
+            <select type="option" [(ngModel)]="serverStatus">
+                <option value="true">Online</option>
+                <option value="false">Offline</option>
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-xs-12">
+            <button 
+            class="btn btn-primary"
+            (click)="onAddServer()"
+            >Add Server</button>
+        </div>
+    </div>
+</div>
+
+{{ serverName }}
+{{ serverStatus }}
+<hr>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <app-server
+                *ngFor="let server of servers"
+                [server]="server"
+            ></app-server>
+        </div>
+    </div>
+</div>
