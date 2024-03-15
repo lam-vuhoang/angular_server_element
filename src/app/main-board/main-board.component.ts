@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { randomBytes } from 'crypto';
 
 @Component({
   selector: 'app-main-board',
