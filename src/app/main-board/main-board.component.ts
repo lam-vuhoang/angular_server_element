@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { LoggingService } from '../service/logging.service';
 
 @Component({
   selector: 'app-main-board',
   templateUrl: './main-board.component.html',
-  styleUrl: './main-board.component.scss'
+  styleUrl: './main-board.component.scss',
+  providers: [LoggingService]
 })
 export class MainBoardComponent {
   id: string;
@@ -13,14 +15,22 @@ export class MainBoardComponent {
     { id: this.getRandomId(16), name: 'Server 1', status: true },
     { id: this.getRandomId(16), name: 'Server 2', status: false },
   ];
-  constructor() {
+  constructor(private loggingService: LoggingService) {
     this.id = this.getRandomId(16);
     this.serverName = '';
     this.serverStatus = false;
+    this.loggingService = loggingService
   }
 
   onAddServer() {
-    this.servers.push({ id: this.getRandomId(16), name: this.serverName, status: this.serverStatus });
+    this.servers.push({ id: this.id, name: this.serverName, status: this.serverStatus });
+    this.loggingService.logCreateNewServer({
+      id: this.id,
+      name: this.serverName,
+      status: this.serverStatus
+    });
+
+    // Reset the form
     this.id = this.getRandomId(16);
     this.serverName = '';
     this.serverStatus = false;
