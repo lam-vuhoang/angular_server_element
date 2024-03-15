@@ -1,57 +1,36 @@
 import { Component } from '@angular/core';
-import { LoggingService } from '../service/logging.service';
+import { ServerType } from '../shared/server.type';
+import { ServersService } from '../service/servers.service';
 
 @Component({
   selector: 'app-main-board',
   templateUrl: './main-board.component.html',
   styleUrl: './main-board.component.scss',
-  providers: [LoggingService]
 })
-export class MainBoardComponent {
-  id: string;
-  serverName: string;
-  serverStatus: boolean;
-  servers = [
-    { id: this.getRandomId(16), name: 'Server 1', status: true },
-    { id: this.getRandomId(16), name: 'Server 2', status: false },
-  ];
-  constructor(private loggingService: LoggingService) {
-    this.id = this.getRandomId(16);
-    this.serverName = '';
-    this.serverStatus = false;
-    this.loggingService = loggingService
-  }
+export class MainBoardComponent {  
+  servers: ServerType[];
+  server: ServerType;
 
-  onAddServer() {
-    this.servers.push({ id: this.id, name: this.serverName, status: this.serverStatus });
-    this.loggingService.logCreateNewServer({
-      id: this.id,
-      name: this.serverName,
-      status: this.serverStatus
-    });
+  constructor(
+    private serversService: ServersService,
+  ) {
+    this.serversService = serversService;
 
-    // Reset the form
-    this.id = this.getRandomId(16);
-    this.serverName = '';
-    this.serverStatus = false;
-  }
-
-  getRandomId(length: number) {
-    let result = '';
-
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-
-    return result;
-  }
-
+    this.servers = this.serversService.servers;
+    this.server = this.serversService.getInitialServer();
+  } 
+  
   onChangeStatus(id: string) {
-    const server = this.servers.find(s => s.id === id);
+    const server = this.serversService.servers.find((s: ServerType) => s.id === id);
     if (server) {
       server.status = !server.status;
     }
+  }
+
+  onAddServer() {
+    this.serversService.onAddServer(this.server);
+
+    // Reset the form
+    this.server = this.serversService.getInitialServer();
   }
 }
