@@ -14,7 +14,5 @@ export class AppComponent implements OnInit {
     private serversService: ServersService
   ) {}
 
-  ngOnInit(): void {
-    this.servers = this.serversService.servers;
-  }
+  ngOnInit(): void {}
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServerType } from '../shared/server.type';
 import { ServersService } from '../service/servers.service';
 
@@ -7,7 +7,7 @@ import { ServersService } from '../service/servers.service';
   templateUrl: './main-board.component.html',
   styleUrl: './main-board.component.scss',
 })
-export class MainBoardComponent {  
+export class MainBoardComponent implements OnInit {  
   servers: ServerType[];
   server: ServerType;
 
@@ -15,16 +15,12 @@ export class MainBoardComponent {
     private serversService: ServersService,
   ) {
     this.serversService = serversService;
-
     this.servers = this.serversService.servers;
     this.server = this.serversService.getInitialServer();
-  } 
-  
-  onChangeStatus(id: string) {
-    const server = this.serversService.servers.find((s: ServerType) => s.id === id);
-    if (server) {
-      server.status = !server.status;
-    }
+  }
+
+  ngOnInit(): void {
+
   }
 
   onAddServer() {

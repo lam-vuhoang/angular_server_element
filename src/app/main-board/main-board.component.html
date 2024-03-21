@@ -28,12 +28,9 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-4"
-            *ngFor="let server of servers"
+            *ngFor="let server of servers"        
         >
-            <app-server
-                [server]="server"
-                (statusChanged)="onChangeStatus(server.id)"
-            ></app-server>
+            <app-server [server]="server"></app-server>
         </div>
     </div>
 </div>

@@ -1,38 +1,29 @@
 import { 
   Component, 
-  Input,
-  Output,
-  EventEmitter
+  Injectable,
+  Input
 } from '@angular/core';
-import { LoggingService } from '../service/logging.service';
+import { ServersService } from '../service/servers.service';
+import { ServerType } from '../shared/server.type';
 
+@Injectable()
 @Component({
   selector: 'app-server',
   templateUrl: './server.component.html',
   styleUrl: './server.component.scss',
-  providers: [LoggingService]
+  providers: []
 })
 export class ServerComponent {
-  @Input() server: { 
-    id:  string,
-    name: string, 
-    status: boolean 
-  };
-
-  @Output() statusChanged = new EventEmitter<string>();
+  @Input() server: ServerType;
   constructor(
-    private loggingService: LoggingService
+    private serversService: ServersService,
   ) {
-    this.server = { 
-      id: 'abcdef1234567890',
-      name: '', 
-      status: false 
-    };
-    this.loggingService = loggingService;
+    this.serversService = serversService;
+    this.server = this.serversService.getInitialServer();
   }
 
-  _onChangeStatus() {
-    this.statusChanged.emit(this.server.id);
-    this.loggingService.logChangeStatus(this.server);
+
+  _onChangeStatus(status: boolean) {
+    this.serversService.onChangeStatus(this.server.id, status);
   }
 }

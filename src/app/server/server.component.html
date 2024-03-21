@@ -4,21 +4,23 @@
         <h3>Name: {{ server.name }}</h3>
         <h6>Id: {{ server.id }}</h6>
         <p>Status: 
-        <span class="font-weight-bold" [ngClass]="server.status === false 
-        ? 'text-danger'
-        : 'text-success'"> 
+        <span class="font-weight-bold" 
+          [ngClass]="server.status === false 
+          ? 'text-danger'
+          : 'text-success'"
+        > 
           <strong>{{ server.status }}</strong>
         </span></p>
 
         <button 
           *ngIf="!server.status" 
           class="btn btn-primary"
-          (click)="_onChangeStatus()"
+          (click)="_onChangeStatus(true)"
         >Change to Online</button>
         <button 
           *ngIf="server.status" 
           class="btn btn-danger"
-          (click)="_onChangeStatus()"
+          (click)="_onChangeStatus(false)"
         >Change to Offline</button>
       </li>
     </ul>
